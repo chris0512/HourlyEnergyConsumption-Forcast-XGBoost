@@ -6,5 +6,6 @@ This is a project to make the XGBoost model to predict the time series data<br/>
 
 <br/>
 
-The original dataframe look like this
+The original dataframe look like this: <br/>
+![screen-shot](original-datafrmae.png)
 
