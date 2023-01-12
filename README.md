@@ -11,7 +11,10 @@ The original dataframe look like this: <br/>
 
 I reset index to the time series:
 ```py
-df.set_index('Datetime')
+# Set time series as index
+df = df.set_index('Datetime')
+df.index = pd.to_datetime(df.index) # cast index from object to index
+df
 ```
 
 
