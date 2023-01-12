@@ -43,3 +43,60 @@ ax.legend(['Training Set', 'Test Set'])
 plt.show()
 ```
 ![screen-shot3](screen-shot3.png)
+
+Decompose time into more features
+```py
+# Feature Creation
+def create_features(df):
+        """
+        Create time series features based on time series index.
+        """
+        df = df.copy()
+        df['hour'] = df.index.hour
+        df['dayofweek'] = df.index.dayofweek
+        df['quarter'] = df.index.quarter
+        df['month'] = df.index.month
+        df['year'] = df.index.year
+        df['day_of_year'] = df.index.dayofyear
+        return df
+        
+df = create_features(df)
+
+
+# split train and test 
+# split target and features
+train = create_features(train)
+test = create_features(test)
+
+FEATURES = ['hour', 'dayofweek', 'quarter', 'month', 'year',
+       'day_of_year']
+TARGET = 'PJME_MW'
+
+X_train = train[FEATURES]
+y_train = train[TARGET]
+
+X_test = test[FEATURES]
+y_test = test[TARGET]
+```
+
+### Create xgboost model to train and evaluate the data
+```py
+reg = xgb.XGBRegressor(n_estimators=1000,
+                       early_stopping_rounds=50,
+                       learning_rate=0.01)
+reg.fit(X_train, y_train, eval_set=[(X_train, y_train), (X_test, y_test)],
+        verbose=100)
+```
+
+# Extract feature importance from xgb
+```py
+fi = pd.DataFrame(data=reg.feature_importances_,
+                  index=reg.feature_names_in_,
+                  columns=['importance'])
+fi
+```
+![screen-shot4.png](screen-shot4.png)
+```py
+fi.sort_values('importance').plot(kind='barh', title='Feature Importance')
+```
+![screen-shot5.png](screen-shot5.png)
