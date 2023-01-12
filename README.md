@@ -29,3 +29,17 @@ df.plot(style='.',
 ```
 ![screenshot](screen-shot2.png)
 
+Train Test Split
+```py
+#train test split
+train = df.loc[df.index < '01-01-2015']
+test = df.loc[df.index >= '01-01-2015']
+
+fig, ax = plt.subplots(figsize=(15, 5))
+train.plot(ax=ax, label='Training Set', title='Data Train/Test Split')
+test.plot(ax=ax, label='Test Set')
+ax.axvline('01-01-2015', color='black', ls='--')
+ax.legend(['Training Set', 'Test Set'])
+plt.show()
+```
+![screen-shot3](screen-shot3.png)
