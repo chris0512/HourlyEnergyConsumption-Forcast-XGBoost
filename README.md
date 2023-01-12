@@ -16,5 +16,5 @@ df = df.set_index('Datetime')
 df.index = pd.to_datetime(df.index) # cast index from object to index
 df
 ```
-
+![datetime](date-time.png)
 
